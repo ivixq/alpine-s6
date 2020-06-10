@@ -1,0 +1,8 @@
+#!/usr/bin/with-contenv bash
+while [ ! -f /tmp/state/99-container-init ]
+do
+  sleep 1
+done
+
+echo "[i] Start Zabbix Agent"
+su-exec zabbix zabbix_agent2 -f >/dev/null 2>&1;

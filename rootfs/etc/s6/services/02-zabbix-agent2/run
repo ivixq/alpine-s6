@@ -5,4 +5,4 @@ do
 done
 
 echo "[i] Start Zabbix Agent"
-su-exec zabbix zabbix_agent2 -f >/dev/null 2>&1;
+zabbix_agent2 -f >/dev/null 2>&1;

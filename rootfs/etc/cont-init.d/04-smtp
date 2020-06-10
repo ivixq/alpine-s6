@@ -1,0 +1,50 @@
+#!/usr/bin/with-contenv bash
+
+ENABLE_SMTP=${ENABLE_SMTP:-"false"}
+SMTP_HOST=${SMTP_HOST:-"smtp.exmail.qq.com"}
+SMTP_PORT=${SMTP_PORT:-"25"}
+SMTP_FROM=${SMTP_FROM:-""}
+SMTP_AUTH=${SMTP_AUTH:-"plain"}
+SMTP_LOG=${SMTP_LOG:-"/var/log/msmtp/msmtp.log"}
+
+MUTT_REALNAME=${MUTT_REALNAME:-"name"}
+
+## Enable or Disable SMTP
+if [ "$ENABLE_SMTP" = "TRUE" ] || [ "$ENABLE_SMTP" = "true" ];  then
+  if [ ! -f /tmp/state/`basename $0`-init ]; then
+    rm -f /usr/sbin/sendmail
+    ln -s /usr/bin/msmtp /usr/sbin/sendmail
+
+    echo '## Automatically Generated on Container Start. See Documentation on how to set!' >/root/.msmtprc
+    echo 'account default' >>/root/.msmtprc
+    echo 'host '$SMTP_HOST >>/root/.msmtprc
+    echo 'port '$SMTP_PORT >>/root/.msmtprc
+    echo 'from '$SMTP_FROM >>/root/.msmtprc
+    if [ -n "$SMTP_AUTH" ]; then echo 'auth '$SMTP_AUTH >>/root/.msmtprc; fi
+    if [ -n "$SMTP_USER" ]; then echo 'user '$SMTP_USER >>/root/.msmtprc; fi
+    if [ -n "$SMTP_PASS" ]; then echo 'password '$SMTP_PASS >>/root/.msmtprc; fi
+    echo 'logfile '$SMTP_LOG >>/root/.msmtprc
+    chmod 600 /root/.msmtprc
+
+    echo 'set sendmail="/usr/bin/msmtp"' >/root/.muttrc
+    echo 'set use_from=yes' >>/root/.muttrc
+    echo 'set envelope_from=yes' >>/root/.muttrc
+    echo 'set realname='$MUTT_REALNAME >>/root/.muttrc
+    echo 'set from='$SMTP_FROM >>/root/.muttrc
+    echo 'set charset=utf-8' >>/root/.muttrc
+    echo 'set send_charset=utf-8' >>/root/.muttrc
+    echo 'set content_type=text/html\;charset=utf-8' >>/root/.muttrc
+    echo 'set rfc2047_parameters=yes' >>/root/.muttrc
+    echo '[i] Setted SMTP Featrues'
+    chmod 600 /root/.muttrc
+       
+    mkdir -p /var/log/msmtp
+  else
+    echo '[i] SMTP Features had enabled'
+  fi
+else
+  echo '[i] Disabled SMTP Featrues'
+fi
+
+mkdir -p /tmp/state
+touch /tmp/state/`basename $0`-init

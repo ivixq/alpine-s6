@@ -1,19 +1,19 @@
 FROM alpine:edge
 LABEL maintainer=ivixq
 
-ARG TZ=Asia/Shanghai 
-ARG S6_OVERLAY_VERSION=v2.0.0.1
-
 ENV DEBUG_MODE=FALSE \ 
     ENABLE_ZABBIX=FALSE \
     ENABLE_CRON=FALSE \
     ENABLE_SMTP=FALSE \
+    TIMEZONE=Asia/Shanghai \
+    S6_OVERLAY_VERSION=v2.0.0.1 \
     TERM=xterm
 
 RUN apk --no-cache upgrade ; \
     apk --no-cache add \
         bash \
         curl \
+        iputils \
         logrotate \
         msmtp \
 	mutt \
@@ -24,13 +24,13 @@ RUN apk --no-cache upgrade ; \
         ; \
     rm -rf /var/cache/apk/* ; \
     rm -rf /etc/logrotate.d/acpid ; \
-    cp -R /usr/share/zoneinfo/$TZ /etc/localtime ; \
-    echo $TZ > /etc/timezone ; \
+    cp -R /usr/share/zoneinfo/${TIMEZONE} /etc/localtime ; \
+    echo ${TIMEZONE} > /etc/timezone ; \
     \   
-    curl -sSL https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-amd64.tar.gz | tar xfz - -C / ; \
-    mkdir -p /sfiles/cron
+    curl -sSL https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-amd64.tar.gz | tar xzf - -C / ; \
+    mkdir -p /assets/cron
 
-COPY rootfs /
+ADD /install /
 
 EXPOSE 10050/TCP
 

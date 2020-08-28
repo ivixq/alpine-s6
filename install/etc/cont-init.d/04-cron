@@ -1,7 +1,8 @@
 #!/usr/bin/with-contenv bash
 
 ENABLE_CRON=${ENABLE_CRON:-"FALSE"}
-  
+ENABLE_LOGROTATE=${ENABLE_LOGROTATE:-"TRUE"}
+
 if [ "$ENABLE_CRON" = "FALSE" ] || [ "$ENABLE_CRON" = "false" ];  then
   echo "[i] Disabl Cron"
   s6-svc -d /var/run/s6/services/`basename $0`

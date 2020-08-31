@@ -45,7 +45,7 @@ if [ "$ENABLE_ZABBIX" = "TRUE" ] || [ "$ENABLE_ZABBIX" = "true" ]; then
   sed -i -e "s/<ZABBIX_USER>/$ZABBIX_USER/g" /etc/zabbix/zabbix_agent2.conf
   
   if [ -n "${ZABBIX_REMOTECOMMANDS_DENY}" ]; then
-    echo "DenyKey=system.run[${ZABBIX_REMOTECOMMANDS_DENY}]" >> /etc/zabbix/zabbix_agentd2.conf
+    echo "DenyKey=system.run[${ZABBIX_REMOTECOMMANDS_DENY}]" >> /etc/zabbix/zabbix_agent2.conf
   fi
 
   mkdir -p ${ZABBIX_LOGFILE%/*}

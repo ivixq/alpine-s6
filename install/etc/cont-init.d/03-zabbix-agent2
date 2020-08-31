@@ -1,10 +1,10 @@
 #!/usr/bin/with-contenv bash
 
 ENABLE_ZABBIX=${ENABLE_ZABBIX:-"TRUE"}
-ZABBIX_LOGFILE=${ZABBIX_LOGFILE:-"/var/log/zabbix/zabbix_agentd.log"}
+ZABBIX_LOGFILE=${ZABBIX_LOGFILE:-"/var/log/zabbix/zabbix_agent2.log"}
 ZABBIX_LOGFILESIZE=${ZABBIX_LOGFILESIZE:-"1"}
 ZABBIX_DEBUGLEVEL=${ZABBIX_DEBUGLEVEL:-"1"}
-ZABBIX_REMOTECOMMANDS=${ZABBIX_REMOTECOMMANDS:-"*"}
+ZABBIX_REMOTECOMMANDS_ALLOW=${ZABBIX_REMOTECOMMANDS_ALLOW:-"*"}
 ZABBIX_REMOTECOMMANDS_LOG=${ZABBIX_REMOTECOMMANDS_LOG:-"1"}
 ZABBIX_SERVER=${ZABBIX_SERVER:-"0.0.0.0/0"}
 ZABBIX_LISTEN_PORT=${ZABBIX_LISTEN_PORT:-"10050"}
@@ -26,23 +26,23 @@ fi
 
 if [ "$ENABLE_ZABBIX" = "TRUE" ] || [ "$ENABLE_ZABBIX" = "true" ]; then
   echo "[i] Enable Zabbix Agent2"
-  sed -i -e "s|<ZABBIX_LOGFILE>|$ZABBIX_LOGFILE|g" /etc/zabbix/zabbix_agentd2.conf
-  sed -i -e "s/<ZABBIX_LOGFILESIZE>/$ZABBIX_LOGFILESIZE/g" /etc/zabbix/zabbix_agentd2.conf
-  sed -i -e "s/<ZABBIX_DEBUGLEVEL>/$ZABBIX_DEBUGLEVEL/g" /etc/zabbix/zabbix_agentd2.conf
-  sed -i -e "s/<ZABBIX_REMOTECOMMANDS_ALLOW>/$ZABBIX_REMOTECOMMANDS_ALLOW/g" /etc/zabbix/zabbix_agentd2.conf
-  sed -i -e "s/<ZABBIX_REMOTECOMMANDS_LOG>/$ZABBIX_REMOTECOMMANDS_LOG/g" /etc/zabbix/zabbix_agentd2.conf
-  sed -i -e "s|<ZABBIX_SERVER>|$ZABBIX_SERVER|g" /etc/zabbix/zabbix_agentd2.conf
-  sed -i -e "s/<ZABBIX_LISTEN_PORT>/$ZABBIX_LISTEN_PORT/g" /etc/zabbix/zabbix_agentd2.conf
-  sed -i -e "s/<ZABBIX_LISTEN_IP>/$ZABBIX_LISTEN_IP/g" /etc/zabbix/zabbix_agentd2.conf
-  sed -i -e "s/<ZABBIX_START_AGENTS>/$ZABBIX_START_AGENTS/g" /etc/zabbix/zabbix_agentd2.conf
-  sed -i -e "s/<ZABBIX_SERVER_ACTIVE>/$ZABBIX_SERVER_ACTIVE/g" /etc/zabbix/zabbix_agentd2.conf
-  sed -i -e "s/<ZABBIX_HOSTNAME>/$ZABBIX_HOSTNAME/g" /etc/zabbix/zabbix_agentd2.conf
-  sed -i -e "s/<ZABBIX_REFRESH_ACTIVE_CHECKS>/$ZABBIX_REFRESH_ACTIVE_CHECKS/g" /etc/zabbix/zabbix_agentd2.conf
-  sed -i -e "s/<ZABBIX_BUFFER_SEND>/$ZABBIX_BUFFER_SEND/g" /etc/zabbix/zabbix_agentd2.conf
-  sed -i -e "s/<ZABBIX_BUFFER_SIZE>/$ZABBIX_BUFFER_SIZE/g" /etc/zabbix/zabbix_agentd2.conf
-  sed -i -e "s/<ZABBIX_MAXLINES_SECOND>/$ZABBIX_MAXLINES_SECOND/g" /etc/zabbix/zabbix_agentd2.conf
-  sed -i -e "s/<ZABBIX_ALLOW_ROOT>/$ZABBIX_ALLOW_ROOT/g" /etc/zabbix/zabbix_agentd2.conf
-  sed -i -e "s/<ZABBIX_USER>/$ZABBIX_USER/g" /etc/zabbix/zabbix_agentd2.conf
+  sed -i -e "s|<ZABBIX_LOGFILE>|$ZABBIX_LOGFILE|g" /etc/zabbix/zabbix_agent2.conf
+  sed -i -e "s/<ZABBIX_LOGFILESIZE>/$ZABBIX_LOGFILESIZE/g" /etc/zabbix/zabbix_agent2.conf
+  sed -i -e "s/<ZABBIX_DEBUGLEVEL>/$ZABBIX_DEBUGLEVEL/g" /etc/zabbix/zabbix_agent2.conf
+  sed -i -e "s/<ZABBIX_REMOTECOMMANDS_ALLOW>/$ZABBIX_REMOTECOMMANDS_ALLOW/g" /etc/zabbix/zabbix_agent2.conf
+  sed -i -e "s/<ZABBIX_REMOTECOMMANDS_LOG>/$ZABBIX_REMOTECOMMANDS_LOG/g" /etc/zabbix/zabbix_agent2.conf
+  sed -i -e "s|<ZABBIX_SERVER>|$ZABBIX_SERVER|g" /etc/zabbix/zabbix_agent2.conf
+  sed -i -e "s/<ZABBIX_LISTEN_PORT>/$ZABBIX_LISTEN_PORT/g" /etc/zabbix/zabbix_agent2.conf
+  sed -i -e "s/<ZABBIX_LISTEN_IP>/$ZABBIX_LISTEN_IP/g" /etc/zabbix/zabbix_agent2.conf
+  sed -i -e "s/<ZABBIX_START_AGENTS>/$ZABBIX_START_AGENTS/g" /etc/zabbix/zabbix_agent2.conf
+  sed -i -e "s/<ZABBIX_SERVER_ACTIVE>/$ZABBIX_SERVER_ACTIVE/g" /etc/zabbix/zabbix_agent2.conf
+  sed -i -e "s/<ZABBIX_HOSTNAME>/$ZABBIX_HOSTNAME/g" /etc/zabbix/zabbix_agent2.conf
+  sed -i -e "s/<ZABBIX_REFRESH_ACTIVE_CHECKS>/$ZABBIX_REFRESH_ACTIVE_CHECKS/g" /etc/zabbix/zabbix_agent2.conf
+  sed -i -e "s/<ZABBIX_BUFFER_SEND>/$ZABBIX_BUFFER_SEND/g" /etc/zabbix/zabbix_agent2.conf
+  sed -i -e "s/<ZABBIX_BUFFER_SIZE>/$ZABBIX_BUFFER_SIZE/g" /etc/zabbix/zabbix_agent2.conf
+  sed -i -e "s/<ZABBIX_MAXLINES_SECOND>/$ZABBIX_MAXLINES_SECOND/g" /etc/zabbix/zabbix_agent2.conf
+  sed -i -e "s/<ZABBIX_ALLOW_ROOT>/$ZABBIX_ALLOW_ROOT/g" /etc/zabbix/zabbix_agent2.conf
+  sed -i -e "s/<ZABBIX_USER>/$ZABBIX_USER/g" /etc/zabbix/zabbix_agent2.conf
   
   if [ -n "${ZABBIX_REMOTECOMMANDS_DENY}" ]; then
     echo "DenyKey=system.run[${ZABBIX_REMOTECOMMANDS_DENY}]" >> /etc/zabbix/zabbix_agentd2.conf

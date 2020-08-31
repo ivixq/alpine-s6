@@ -8,8 +8,8 @@ CRON_CMD=${CRON_CMD:-""}
 
 if [ ! -f /tmp/state/`basename $0` ]; then
   sleep 30
-  sed -e "s|<CRON_CMD>|$CRON_CMD|g" -i /assets/cron/crontab.txt
   echo '59 23 * * * logrotate -f /etc/logrotate.d/* >/dev/null 2>&1' >>/assets/cron/crontab.txt
+  sed -e "s|<CRON_CMD>|$CRON_CMD|g" -i /assets/cron/crontab.txt
   
   mkdir -p /tmp/state/
   echo 'Initialization Complete' >/tmp/state/`basename $0`
